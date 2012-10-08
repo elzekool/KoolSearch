@@ -9,7 +9,7 @@
  * @subpackage Query
  **/
 
-namespace KoolSearch\Query\Parse;
+namespace KoolSearch\Query\Element;
 
 use KoolSearch\Storage\IDocumentStorage;
 use KoolSearch\Storage\ITermStorage;

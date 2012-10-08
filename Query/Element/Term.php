@@ -9,7 +9,7 @@
  * @subpackage Query
  **/
 
-namespace KoolSearch\Query\Parse;
+namespace KoolSearch\Query\Element;
 
 use KoolSearch\Storage\IDocumentStorage;
 use KoolSearch\Storage\ITermStorage;
@@ -23,7 +23,7 @@ use KoolSearch\Storage\ITermDocumentStorage;
  * @package KoolSearch
  * @subpackage Query
  **/
-class TermElement implements IQueryElement
+class Term implements IQueryElement
 {  
     protected $Required = self::REQUIRED_OPTIONAL;
     protected $Field = '*';

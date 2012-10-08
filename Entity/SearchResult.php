@@ -36,4 +36,33 @@ class SearchResult
         $this->Matches = $Matches;
     }
     
+    /**
+     * Get Document ID
+     * 
+     * @return string Document ID
+     */
+    public function getDocument() {
+        return $this->Document;
+    }
+
+    /**
+     * Get Score
+     * 
+     * @return float Score
+     */
+    public function getScore() {
+        return $this->Score;
+    }
+    
+    /**
+     * Get Matches
+     * 
+     * @return KoolSearch\Entity\TermDocument[] Matching TermDocuments
+     */
+    public function getMatches() {
+        return $this->Matches;
+    }
+
+
+    
 }

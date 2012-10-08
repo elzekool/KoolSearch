@@ -12,9 +12,9 @@
 namespace KoolSearch\Query\Parse;
 
 use KoolSearch\Query\Tokenize\Token;
-use KoolSearch\Query\Parse\IQueryElement;
-use KoolSearch\Query\Parse\TermElement;
-use KoolSearch\Query\Parse\PhraseElement;
+use KoolSearch\Query\Element\IQueryElement;
+use KoolSearch\Query\Element\Term;
+use KoolSearch\Query\Element\Phrase;
 
 /**
  * Parser
@@ -58,7 +58,7 @@ class Parser
      * 
      * @param \KoolSearch\Query\Tokenize\Token[] $tokens Tokens
      * 
-     * @return \KoolSearch\Query\Parse\IQueryElement[] Query elements
+     * @return \KoolSearch\Query\Element\IQueryElement[] Query elements
      */
     public function parse(array $tokens) {
         
@@ -85,8 +85,8 @@ class Parser
                 
             } else if ($type == Token::TOKEN_PHRASE_END) {
                 if (count($phrase_elements) > 1) {
-                    $elements[] = new PhraseElement($required, $field, $phrase_elements);
-                } else if ($count($phrase_elements) == 0) {
+                    $elements[] = new Phrase($required, $field, $phrase_elements);
+                } else if (count($phrase_elements) == 1) {
                     $elements[] = $phrase_elements[0];                    
                 }
                 $in_phrase = false;
@@ -96,9 +96,9 @@ class Parser
                 
             } else if ($type == Token::TOKEN_TERM) {
                 if ($in_phrase) {
-                    $phrase_elements[] = new TermElement(IQueryElement::REQUIRED_REQUIRED, $field, $token->getData());
+                    $phrase_elements[] = new Term(IQueryElement::REQUIRED_REQUIRED, $field, $token->getData());
                 } else {
-                    $elements[] = new TermElement($required, $field, $token->getData());
+                    $elements[] = new Term($required, $field, $token->getData());
                     $required = IQueryElement::REQUIRED_OPTIONAL;
                     $field = '*';
                 }

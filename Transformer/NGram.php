@@ -74,6 +74,7 @@ class NGram implements ITransformer
      * @param string[] $terms Terms
      */
     public function process(array &$terms) {
+        $terms = array_values($terms);        
         for($x = count($terms)-1; $x >= 0; $x--) {            
             $ngrams = array();
             for($n = $this->MinSize; $n <= $this->MaxSize; $n++) {

@@ -21,7 +21,17 @@ namespace KoolSearch\Storage;
  */
 class KoolDocumentStorage implements IDocumentStorage
 {    
-
+    private $InsertQuery;
+    
+    /**
+     * Constructor
+     */
+    function __construct() {
+        $database = \KoolDevelop\Database\Adaptor::getInstance('koolsearch');
+        $query = $database->newQuery();        
+        $this->InsertQuery = $query->custom('INSERT IGNORE INTO `documents` SET id = ?');
+    }
+    
     /**
      * Save (or update) document into database
      * 
@@ -30,10 +40,7 @@ class KoolDocumentStorage implements IDocumentStorage
      * @return void
      */
     public function saveDocument(\KoolSearch\Entity\Document &$document) {
-        $database = \KoolDevelop\Database\Adaptor::getInstance('koolsearch');
-        $query = $database->newQuery();        
-        $query->custom('REPLACE INTO `documents` SET id = ?', $document->getId());
-        $query->execute();
+        $this->InsertQuery->execute(array($document->getId()));
     }
     
     /**

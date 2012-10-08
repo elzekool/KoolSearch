@@ -28,13 +28,13 @@ interface ITermStorage
     const SEARCH_REGEX = 'regex';   
     
     /**
-     * Save (or update) term into database
+     * Save (or update) terms into database
      * 
-     * @param \KoolSearch\Entity\Term $term Term
+     * @param \KoolSearch\Entity\Term[] $terms Terms
      * 
      * @return void
      */
-    public function saveTerm(\KoolSearch\Entity\Term &$term);
+    public function saveTerms(array &$terms);
     
     /**
      * Search for Terms in database

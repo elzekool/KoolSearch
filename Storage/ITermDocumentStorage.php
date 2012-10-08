@@ -24,13 +24,13 @@ interface ITermDocumentStorage
 {    
 
     /**
-     * Save (or update) term_document into database
+     * Save (or update) term_documents into database
      * 
-     * @param \KoolSearch\Entity\TermDocument $term_document TermDocument
+     * @param \KoolSearch\Entity\TermDocument[] $term_documents TermDocuments
      * 
      * @return void
      */
-    public function saveDocument(\KoolSearch\Entity\TermDocument &$term_document);
+    public function saveTermDocuments(array &$term_documents);
     
     /**
      * Delete term_document for Document

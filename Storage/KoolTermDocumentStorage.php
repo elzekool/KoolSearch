@@ -21,26 +21,44 @@ namespace KoolSearch\Storage;
  */
 class KoolTermDocumentStorage implements ITermDocumentStorage
 {    
-
+    private $InsertQuery;
+    
     /**
-     * Save (or update) term_document into database
+     * Constructor
+     */
+    function __construct() {
+        $database = \KoolDevelop\Database\Adaptor::getInstance('koolsearch');
+        $query = $database->newQuery();        
+        $this->InsertQuery = $query->custom('INSERT INTO `term_documents` SET term = ?, field = ?, document = ?, position = ?');
+    }
+        
+    /**
+     * Save (or update) term_documents into database
      * 
-     * @param \KoolSearch\Entity\TermDocument $term_document TermDocument
+     * @param \KoolSearch\Entity\TermDocument[] $term_documents TermDocuments
      * 
      * @return void
      */
-    public function saveDocument(\KoolSearch\Entity\TermDocument &$term_document) {
+    public function saveTermDocuments(array &$term_documents) {
+                
+        if (count($term_documents) == 0) {
+            return;
+        }
+        
         $database = \KoolDevelop\Database\Adaptor::getInstance('koolsearch');
+        
         $query = $database->newQuery();        
-                
-        $query
-            ->insert()->into('term_documents')
-            ->set('term = ?', $term_document->getTerm())
-            ->set('field = ?', $term_document->getField())
-            ->set('document = ?', $term_document->getDocument())
-            ->set('position = ?', $term_document->getPosition());
-                
-        $query->execute();
+        $query->custom('INSERT INTO `term_documents` (`term`, `field`, `document`, `position`) VALUES ' . join(',', array_fill(0, count($term_documents), '(?, ?, ?, ?)')));
+
+        $params = array();
+        foreach($term_documents as $term_document) {
+            $params[] = $term_document->getTerm();
+            $params[] = $term_document->getField();
+            $params[] = $term_document->getDocument();
+            $params[] = $term_document->getPosition();
+        }        
+        $query->execute($params);
+
     }
     
     /**

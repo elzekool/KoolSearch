@@ -53,9 +53,10 @@ class Indexer
     public function addDocument(\KoolSearch\Entity\Document $document) {
 
         // First make sure document is in database
-        $this->DocumentStorage->saveDocument($document);
+        $this->DocumentStorage->saveDocument($document);        
         $this->TermDocumentStorage->deleteForDocument($document);
         
+                
         // Fetch data
         $data = $document->getData();
         
@@ -89,16 +90,24 @@ class Indexer
                 }
             }
             
-            // Save found terms
-            foreach($terms as $position => $term) {                
-                $this->TermStorage->saveTerm(
-                    new \KoolSearch\Entity\Term($term, null)
-                );                
-                
-                $this->TermDocumentStorage->saveDocument(
-                    new \KoolSearch\Entity\TermDocument($term, $fieldname, $document->getId(), $position)
-                );
+            
+            // Reset position keys
+            $terms = array_values($terms);
+
+            // Prepare entities for batch storage
+            $_terms = array();
+            $_term_documents = array();
+            
+            foreach($terms as $position => $term) {   
+                if ($term != '') {
+                    $_terms[] = new \KoolSearch\Entity\Term($term);
+                    $_term_documents[] = new \KoolSearch\Entity\TermDocument($term, $fieldname, $document->getId(), $position);
+                }
             }
+            
+            // Save entities
+            $this->TermStorage->saveTerms($_terms);            
+            $this->TermDocumentStorage->saveTermDocuments($_term_documents);
             
         }
         

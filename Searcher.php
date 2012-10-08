@@ -66,7 +66,7 @@ class Searcher
 
         // Excecute elements
         foreach($elements as &$element) {
-            /* @var $element \KoolSearch\Query\Parse\IQueryElement */
+            /* @var $element \KoolSearch\Query\Element\IQueryElement */
             $element->execute($this->TermStorage, $this->DocumentStorage, $this->TermDocumentStorage, $this->Fields);
         }
 
@@ -103,11 +103,11 @@ class Searcher
             }
 
             // If required add document id's to the required list
-            if ($element->getRequired() == \KoolSearch\Query\Parse\IQueryElement::REQUIRED_REQUIRED) {
+            if ($element->getRequired() == \KoolSearch\Query\Element\IQueryElement::REQUIRED_REQUIRED) {
                 $match_required[] = array_keys($matching_term_documents);
 
             // If exclude add document id's to the exclude list
-            } else if ($element->getRequired() == \KoolSearch\Query\Parse\IQueryElement::REQUIRED_EXCLUDED) {
+            } else if ($element->getRequired() == \KoolSearch\Query\Element\IQueryElement::REQUIRED_EXCLUDED) {
                 $match_exclude[] = array_keys($matching_term_documents);
                 
                 // Don't add the documents to the found document list

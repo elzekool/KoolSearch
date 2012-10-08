@@ -39,7 +39,7 @@ class Stopwords implements ITransformer
      */
     public function process(array &$terms) {
         for($x = count($terms)-1; $x >= 0; $x--) {
-            if (in_array($terms[$x], $this->Stopwords)) {
+            if (in_array(strtolower($terms[$x]), $this->Stopwords)) {
                 unset($terms[$x]);
             }
         }

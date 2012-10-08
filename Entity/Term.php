@@ -20,7 +20,6 @@ namespace KoolSearch\Entity;
 class Term 
 {
     private $Term;
-    private $Frequency;
     
     /**
      * Constructor
@@ -52,27 +51,6 @@ class Term
     public function setTerm($Term) {
         $this->Term = $Term;
     }
-
-    /**
-     * Get Frequency
-     *
-     * @return int Frequency
-     **/
-    public function getFrequency() {
-        return $this->Frequency;
-    }
-
-    /**
-     * Set Frequency
-     *
-     * @param int $Frequency Frequency
-     *
-     * @return void 
-     **/
-    public function setFrequency($Frequency) {
-        $this->Frequency = $Frequency;
-    }
-
 
 
 }

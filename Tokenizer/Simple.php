@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard Tokenizer
+ * Simple Tokenizer
  *
  * @author Elze Kool
  * @copyright Elze Kool, Kool Software en Webdevelopment
@@ -12,17 +12,26 @@
 namespace KoolSearch\Tokenizer;
 
 /**
- * Standard Tokenizer
+ * Simple Tokenizer
  * 
- * Standard tokenizer, usefull in most cases. Splits words on
- * comma, dot, dash and whitespace characters
+ * Tokenizes string on an exact delimiter
  * 
  * @package KoolSearch
  * @subpackage Tokenizer
  */
-class Standard implements ITokenizer
+class Simple implements ITokenizer
 {
+    private $Delimiter;
     
+    /**
+     * Constructor
+     * 
+     * @param string $Delimiter Delimiter
+     */
+    function __construct($Delimiter = ',') {
+        $this->Delimiter = $Delimiter;
+    }
+
     /**
      * Process data 
      * 
@@ -31,7 +40,7 @@ class Standard implements ITokenizer
      * @return string[] Tokens
      */
     public function process($input) {
-        return preg_split("/[\s,\.\-\(\)!\?\:;\/\\\\]+/", $input);
+        return explode($this->Delimiter, $input);
     }
     
     
