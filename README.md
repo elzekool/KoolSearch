@@ -34,3 +34,17 @@ Standard classes are provided if using the KoolDevelop framework. Create your ow
 Are used for indexing and searching transforming strings into terms. **CharFilters** work on the raw input string and perform things like lowercasing, replacing special characters, etc. **Tokenizers** transforms the filtered input string to individual tokens or terms. This terms are what are actualy stored and retrieved from the database. **Transformers** can be used to manipulate terms. The work on the tokenized terms instead of the input string. This makes them different from the **CharFilters**. Transformers do things like removing duplicate terms, removing stopwords and making NGrams.
 
 ### Query Tokenizer, Parser and Elements ###
+KoolSearch supports an user friendly query syntax. This syntax consists of the + and minus operators, field selection (:) and phrases.
+The search query is first Tokenized by the Tokenizer into Tokens. The Tokens are read by the Parser. The parser creates
+the individual Elements that make up the search query. Supported elements at this moment are Term and Phrase.
+
+### Entities ###
+Entities contain the different entities used in the application. This includes:
+* **Term**, Search Term as stored in the Index
+* **Document**, Index Document as stored in the Index, uniquely identified by it's Id
+* **Field**, Fields that are index. Contain the configuration for indexing and searching the index.
+* **TermDocument**, The actual elements the Index is build uppon, contains the links between terms and documents.
+* **SearchResult**, Search result as returned from the searcher, contains document, score and matching TermDocuments.
+
+
+ 
